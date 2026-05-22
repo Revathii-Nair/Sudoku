@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Flask instance folder (used for local files)
+instance/
+
+# Local environment variables
+*.env
+
+# Logs
+*.log
+
+# Coverage / testing
+htmlcov/
+.tox/
+.nox/
+.coverage
+.cache
+.pytest_cache/
+
+# IDE / editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules 
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
