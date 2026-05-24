@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-bg: #fffffe;
+    --color-surface: #f0e2e1;
+    --color-headline: #181818;
+    --color-subheadline: #2e2e2e;
+    --color-paragraph: #2e2e2e;
+    --color-btn: #4fc4cf;
+    --color-btn-text: #181818;
+    --color-stroke: #181818;
+    --color-icon-main: #f2eef5;
+    --color-highlight: #4fc4cf;
+    --color-secondary: #994ff3;
+    --color-tertiary: #fbdd74;
+    --color-card-bg: #f0e2e1;
+    --color-card-heading: #181818;
+    --color-card-paragraph: #2e2e2e;
+    --shadow-glow: 0 0 20px rgba(79, 196, 207, 0.35);
+    --shadow-purple: 0 0 20px rgba(153, 79, 243, 0.35);
+  }
+
+  .dark {
+    --color-bg: #12111a;
+    --color-surface: #1e1c2e;
+    --color-headline: #f2eef5;
+    --color-subheadline: #c8c2d4;
+    --color-paragraph: #c8c2d4;
+    --color-btn: #4fc4cf;
+    --color-btn-text: #12111a;
+    --color-stroke: #f2eef5;
+    --color-icon-main: #1e1c2e;
+    --color-highlight: #4fc4cf;
+    --color-secondary: #994ff3;
+    --color-tertiary: #fbdd74;
+    --color-card-bg: #1e1c2e;
+    --color-card-heading: #f2eef5;
+    --color-card-paragraph: #c8c2d4;
+    --shadow-glow: 0 0 30px rgba(79, 196, 207, 0.2);
+    --shadow-purple: 0 0 30px rgba(153, 79, 243, 0.25);
+  }
+
+  body {
+    background-color: var(--color-primary);
+    color: var(--color-headline);
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease;
+  }
+}
