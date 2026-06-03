@@ -1,14 +1,14 @@
 import { useState } from "react";
 import Header from "./components/Header";
-import SudokuGrid from "./components/SudoGrid";
+import GamePage from "./pages/GamePage";
 
 function App() {
   return (
     <>
-      <body className="bg-linear-to-t from-[#e1d4fe] to-[#aaacfb]">
+      <div className="bg-linear-to-t from-[#e1d4fe] to-[#aaacfb]">
         <Header />
-        <SudokuGrid />
-      </body>
+        <GamePage />
+      </div>
     </>
   );
 }

@@ -7,18 +7,26 @@
     --color-headline: #181818;
     --color-subheadline: #2e2e2e;
     --color-paragraph: #2e2e2e;
-    --color-btn: #4fc4cf;
+
     --color-btn-text: #181818;
     --color-stroke: #181818;
     --color-icon-main: #f2eef5;
     --color-highlight: #4fc4cf;
-    --color-secondary: #994ff3;
-    --color-tertiary: #fbdd74;
+
     --color-card-bg: #f0e2e1;
     --color-card-heading: #181818;
     --color-card-paragraph: #2e2e2e;
     --shadow-glow: 0 0 20px rgba(79, 196, 207, 0.35);
     --shadow-purple: 0 0 20px rgba(153, 79, 243, 0.35);
+
+    --color-pink-border: #d946ef;
+    --color-surface-2: #ffecec;
+    --color-error: #f87171;
+
+    --color-btn: #4fc4cf;
+    --color-secondary: #994ff3;
+    --color-tertiary: #fbdd74;
+    --color-yellow: #ffaf03;
   }
 
   .dark {
