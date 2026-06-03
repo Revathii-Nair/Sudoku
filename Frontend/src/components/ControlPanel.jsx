@@ -4,8 +4,9 @@ import ActionBtn from "./ActionBtn";
 import StatsBar from "./StatBar";
 import NumberBtn from "./NumberBtn";
 import { X, Undo2, Lightbulb, PencilLine, Eraser } from "lucide-react";
+import NumberPanel from "./NumberPanel";
 
-export default function ControlPanel() {
+export default function ControlPanel({ selectedNumber, setSelectedNumber }) {
   return (
     <>
       <div className="ml-10 flex flex-col gap-6 items-center">
@@ -13,16 +14,10 @@ export default function ControlPanel() {
           <ActionBtn action="Erase" Icon={Eraser} color="color-red-500"></ActionBtn>
           <ActionBtn action="Undo" Icon={Undo2} color="color-btn"></ActionBtn>
           <ActionBtn action="Hint" Icon={Lightbulb} color="color-yellow"></ActionBtn>
-          <ActionBtn action="Edit" Icon={PencilLine} color="color-secondary"></ActionBtn>
+          <ActionBtn action="Mark" Icon={PencilLine} color="color-secondary"></ActionBtn>
         </div>
 
-        <div className="grid grid-cols-3">
-          {Array(9)
-            .fill(null)
-            .map((_, i) => (
-              <NumberBtn key={i} num={i + 1} />
-            ))}
-        </div>
+        <NumberPanel selectedNumber={selectedNumber} setSelectedNumber={setSelectedNumber} />
 
         <StatsBar />
       </div>

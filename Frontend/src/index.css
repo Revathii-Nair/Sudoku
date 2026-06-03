@@ -27,6 +27,9 @@
     --color-secondary: #994ff3;
     --color-tertiary: #fbdd74;
     --color-yellow: #ffaf03;
+    --color-cell-select: #7ed6f0;
+    /* --color-cell-highlight2: #cedfdc; */
+    --color-cell-highlight: #dfdbdb;
   }
 
   .dark {
