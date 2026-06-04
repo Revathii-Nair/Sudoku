@@ -10,7 +10,13 @@ class CSP:
     def _is_complete(self,assignment):
         return len(assignment) == len(self.variables)
     
-    def initialize_domains(self, puzzle):
+    def initialize_domains(self, puzzle):  
+        if len(puzzle)!=9:
+            raise ValueError("The puzzle should have 9 rows")
+        for r in puzzle:
+            if len(r)!=9:
+                raise ValueError("The puzzle should have 9 columns")
+        
         for var in self.variables:
             row,col = var
             if puzzle[row][col]==0:
