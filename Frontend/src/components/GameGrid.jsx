@@ -4,20 +4,23 @@ import NumberBtn from "./NumberBtn";
 import { useState, useEffect } from "react";
 import ActionBtn from "./ActionBtn";
 import NumberPad from "./ControlPanel";
+import api from "../../api";
 
-export default function GameGrid({ selectedCell, setSelectedCell, selectedNumber }) {
-  const mainPuzzle = [
-    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-    [0, 0, 0, 0, 8, 0, 0, 7, 9],
-  ];
+const mainPuzzle = [
+  [5, 3, 0, 0, 7, 0, 0, 0, 2],
+  [6, 7, 0, 1, 9, 5, 0, 0, 0],
+  [0, 9, 8, 0, 0, 0, 0, 6, 0],
+  [8, 0, 0, 0, 6, 0, 0, 0, 3],
+  [4, 0, 6, 8, 0, 3, 7, 0, 1],
+  [7, 1, 0, 0, 2, 0, 0, 0, 6],
+  [0, 6, 0, 0, 0, 7, 2, 8, 4],
+  [0, 0, 7, 4, 1, 9, 0, 0, 5],
+  [0, 4, 0, 0, 8, 0, 0, 7, 9],
+];
+
+export default function GameGrid({ selectedCell, setSelectedCell, selectedNumber, setSelectedNumber }) {
   const [puzzle, setPuzzle] = useState(mainPuzzle);
+  const [solvedPuzzle, setSolvedPuzzle] = useState(null);
   const [userBoard, setUserBoard] = useState(mainPuzzle.map((row) => row.map(() => null)));
 
   const handleSetUserBoard = (row, col, num) => {
@@ -27,10 +30,24 @@ export default function GameGrid({ selectedCell, setSelectedCell, selectedNumber
   };
 
   useEffect(() => {
-    if (selectedNumber !== null && selectedCell.row !== null && selectedCell.col !== null) {
+    if (selectedNumber !== null && selectedCell.row !== null && selectedCell.col !== null && puzzle[selectedCell.row][selectedCell.col] === 0) {
       handleSetUserBoard(selectedCell.row, selectedCell.col, selectedNumber);
+      setSelectedNumber(null);
     }
   }, [selectedNumber, selectedCell]);
+
+  useEffect(() => {
+    const fetchSolvedPuzzle = async () => {
+      try {
+        const solvedPuzzle = await api.post("/solve", { puzzle: mainPuzzle });
+        setSolvedPuzzle(solvedPuzzle.data);
+        console.log(solvedPuzzle.data);
+      } catch (err) {
+        console.error("Puzzle API error:", err.response?.data || err.message);
+      }
+    };
+    fetchSolvedPuzzle();
+  }, []);
 
   return (
     <div className="flex justify-center items-center">
@@ -68,14 +85,18 @@ export default function GameGrid({ selectedCell, setSelectedCell, selectedNumber
 
             const value = puzzle[row][col] !== 0 ? puzzle[row][col] : userBoard[row][col];
 
-            const isSameNumber = selectedValue !== null && value === selectedValue ? "bg-[var(--color-cell-highlight)] !text-blue-900" : "";
-
-            const textColor = userBoard[row][col] !== null && puzzle[row][col] === 0 ? "text-cyan-500 " : "text-blue-500";
+            const textColor = userBoard[row][col] !== null && puzzle[row][col] === 0 ? "text-cyan-500 " : "text-blue-600";
+            const isCorrect =
+              solvedPuzzle && userBoard[row][col] !== null && userBoard[row][col] !== solvedPuzzle[row][col]
+                ? "!text-[var(--color-cell-error))] !bg-[var(--color-cell-error-highlight)] "
+                : "";
+            const isSameNumber =
+              isCorrect === "" && selectedValue !== null && value === selectedValue ? "bg-[var(--color-cell-same-highlight)] !text-blue-900" : "";
 
             return (
               <div
                 key={`${row}-${col}`}
-                className={`flex justify-center items-center  text-2xl font-semibold ${borderClasses}  hover:bg-[var(--color-cell-highlight)] ${textColor} ${isSelected} ${isSameNumber} ${isSameRowOrCol} ${isSameBlock} `}
+                className={`flex justify-center items-center  text-2xl font-semibold ${borderClasses}  hover:bg-[var(--color-cell-highlight)] ${textColor} ${isSelected} ${isSameNumber} ${isSameRowOrCol} ${isSameBlock} ${isCorrect}`}
                 onClick={() => {
                   setSelectedCell({ row, col });
                 }}

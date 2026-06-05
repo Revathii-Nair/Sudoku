@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import GameGrid from "../components/GameGrid";
 import ControlPanel from "../components/ControlPanel";
 import ProgressBar from "../components/ProgressBar";
+import api from "../../api";
 
 export default function GamePage() {
   const [selectedCell, setSelectedCell] = useState({ row: null, col: null });
   const [selectedNumber, setSelectedNumber] = useState(null);
 
-  const handleNumberSelect = (num) => {
-    if (selectedNumber === num) setSelectedNumber(null);
-    else setSelectedNumber(num);
-  };
+  useEffect(() => {
+    const handleApi = async () => {
+      try {
+        const puzzle = await api.get("/");
+        console.log(puzzle.data);
+      } catch {
+        console.error("API fetch error:", err);
+      }
+    };
+    handleApi();
+  }, []);
 
   return (
     <>
@@ -18,8 +26,13 @@ export default function GamePage() {
         <ProgressBar />
       </div>
       <div className="flex flex-col md:flex-row justify-center items-center gap-12">
-        <GameGrid selectedCell={selectedCell} setSelectedCell={setSelectedCell} selectedNumber={selectedNumber} />
-        <ControlPanel selectedNumber={selectedNumber} setSelectedNumber={handleNumberSelect} />
+        <GameGrid
+          selectedCell={selectedCell}
+          setSelectedCell={setSelectedCell}
+          selectedNumber={selectedNumber}
+          setSelectedNumber={setSelectedNumber}
+        />
+        <ControlPanel selectedNumber={selectedNumber} setSelectedNumber={setSelectedNumber} />
       </div>
     </>
   );

@@ -28,8 +28,10 @@
     --color-tertiary: #fbdd74;
     --color-yellow: #ffaf03;
     --color-cell-select: #7ed6f0;
-    /* --color-cell-highlight2: #cedfdc; */
-    --color-cell-highlight: #dfdbdb;
+    --color-cell-highlight: #e2e8ea;
+    --color-cell-same-highlight: #b7d5de;
+    --color-cell-error-highlight: #f4d4d4;
+    --color-cell-error: #f95757;
   }
 
   .dark {
