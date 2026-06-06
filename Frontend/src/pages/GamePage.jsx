@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import GameGrid from "../components/GameGrid";
 import ControlPanel from "../components/ControlPanel";
 import ProgressBar from "../components/ProgressBar";
+import GameModeCard from "../components/GameModeCard";
 import api from "../../api";
 
 export default function GamePage() {
@@ -16,7 +17,7 @@ export default function GamePage() {
   const [puzzleSum, setPuzzleSum] = useState(0);
   const [markMode, setMarkMode] = useState(false);
   const [marking, setMarking] = useState(null);
-  const [hints, setHints] = useState(10);
+  const [hints, setHints] = useState(80);
   const [errors, setErrors] = useState(0);
 
   const handleErase = () => {
@@ -38,11 +39,11 @@ export default function GamePage() {
 
   const handleHint = () => {
     if (hints === 0) return;
-    for (var r = 0; r !== 9; r++) {
-      for (var c = 0; c !== 9; c++) {
+    for (let r = 0; r !== 9; r++) {
+      for (let c = 0; c !== 9; c++) {
         if ((userBoard[r][c] === null || userBoard[r][c] !== solvedPuzzle[r][c]) && solvedPuzzle && puzzle[r][c] === 0) {
           const updatedUserBoard = [...userBoard];
-          var value = solvedPuzzle[r][c];
+          let value = solvedPuzzle[r][c];
           updatedUserBoard[r][c] = value;
           setUserBoard(updatedUserBoard);
           setHistory([...history, { row: r, col: c, value: value }]);
@@ -106,7 +107,7 @@ export default function GamePage() {
   useEffect(() => {
     const handleApi = async () => {
       try {
-        const p = await api.get("/getPuzzle");
+        const p = await api.get("/getRandomPuzzle");
         setPuzzle(p.data);
         setUserBoard(p.data.map((row) => row.map(() => null)));
 

@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from CSP import CSP
+import random
 
 
 app = FastAPI()
@@ -31,12 +32,40 @@ puzzle_try=[
   ]
 
 @app.get("/getPuzzle")
-def random_puzzle():
+def static_puzzle():
     return puzzle_try
+
+@app.get("/getRandomPuzzle")
+def random_puzzle():
+    return get_random_puzzle()
+
+
 
 @app.post("/solve/")
 @limiter.limit("10/minute")
 def solve_sudoku(request: Request,p: Puzzle):   
+    return call_csp(p)
+
+
+def get_random_puzzle():
+    p = Puzzle(puzzle=[[0]*9 for _ in range(9)])
+    row = random.randrange(9)
+    col = random.randrange(9)
+    num = random.randrange(1,10)
+    p.puzzle[row][col] = num
+    puzzle = call_csp(p)
+
+    for _ in range(64):
+        row = random.randrange(9)
+        col = random.randrange(9)
+        if(puzzle[row][col]==0):
+            continue
+        puzzle[row][col]=0
+
+    return puzzle
+
+
+def call_csp(p:Puzzle):
     try:
         variable = [(i,j) for  i in range(9) for j in range(9)]
         domains = {}
