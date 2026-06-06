@@ -1,10 +1,11 @@
 import React from "react";
-import StatsBar from "./StatBar";
+import StatsBar from "./StatsBar";
 import NumberBtn from "./NumberBtn";
 import { useState, useEffect } from "react";
 import ActionBtn from "./ActionBtn";
 import NumberPad from "./ControlPanel";
 import api from "../../api";
+import { TruckElectricIcon } from "lucide-react";
 
 export default function GameGrid({
   selectedCell,
@@ -17,13 +18,27 @@ export default function GameGrid({
   solvedPuzzle,
   history,
   setHistory,
+  marking,
+  setMarking,
+  markMode,
+  errors,
+  setErrors,
 }) {
   const handleSetUserBoard = (row, col, num) => {
-    const updatedUserBoard = [...userBoard];
-    updatedUserBoard[row][col] = num;
-    setUserBoard(updatedUserBoard);
-    setHistory([...history, { row, col, value: num }]);
+    if (markMode) {
+      const updatedMarking = [...marking];
+      updatedMarking[row][col][num - 1] = !updatedMarking[row][col][num - 1];
+      setMarking(updatedMarking);
+      setHistory([...history, { row, col, value: num, marking: true }]);
+    } else {
+      const updatedUserBoard = [...userBoard];
+      updatedUserBoard[row][col] = num;
+      setUserBoard(updatedUserBoard);
+      setHistory([...history, { row, col, value: num }]);
+    }
   };
+
+  const handleMarking = (row, col, num) => {};
 
   useEffect(() => {
     if (selectedNumber !== null && selectedCell.row !== null && selectedCell.col !== null && puzzle[selectedCell.row][selectedCell.col] === 0) {
@@ -32,9 +47,23 @@ export default function GameGrid({
     }
   }, [selectedNumber, selectedCell]);
 
+  useEffect(() => {
+    if (solvedPuzzle && userBoard) {
+      let count = 0;
+      for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) {
+          if (userBoard[r][c] !== null && userBoard[r][c] !== solvedPuzzle[r][c]) {
+            count++;
+          }
+        }
+      }
+      setErrors(count);
+    }
+  }, [userBoard, solvedPuzzle]);
+
   return (
-    <div className="flex justify-center items-center">
-      <div className="grid grid-cols-9 aspect-square w-[540px] h-[540px] bg-[var(--color-surface)] rounded-3xl shadow-2xl overflow-hidden border-2 border-[var(--color-pink-border)]">
+    <div className="flex justify-center  items-center border-3 overflow-hidden rounded-3xl border-[var(--color-pink-border)]">
+      <div className="grid grid-cols-9 w-[540px] h-[540px] bg-[var(--color-surface)]   ">
         {puzzle.map((rowArr, row) =>
           rowArr.map((val, col) => {
             const borderClasses = [
@@ -45,7 +74,7 @@ export default function GameGrid({
 
             const isSelected =
               selectedCell.row === row && selectedCell.col === col
-                ? "bg-[var(--color-cell-select)] !text-blue-900 hover:bg-[var(--color-cell-select)] border-blue-200 "
+                ? "bg-[var(--color-cell-select)] !text-blue-900 hover:bg-[var(--color-cell-select)]"
                 : "";
 
             const isSameRowOrCol = !isSelected && (selectedCell.row === row || selectedCell.col === col) ? "bg-[var(--color-cell-highlight)]" : "";
@@ -79,12 +108,24 @@ export default function GameGrid({
             return (
               <div
                 key={`${row}-${col}`}
-                className={`flex justify-center items-center  text-2xl font-semibold ${borderClasses}  hover:bg-[var(--color-cell-highlight)] ${textColor} ${isSelected} ${isSameNumber} ${isSameRowOrCol} ${isSameBlock} ${isCorrect}`}
+                className={`flex justify-center items-center w-[60px] h-[60px] text-2xl font-semibold ${borderClasses}  hover:bg-[var(--color-cell-highlight)] ${textColor} ${isSelected} ${isSameNumber} ${isSameRowOrCol} ${isSameBlock} ${isCorrect}`}
                 onClick={() => {
                   setSelectedCell({ row, col });
                 }}
               >
-                {value}
+                {value ? (
+                  value
+                ) : marking[row][col].length > 0 ? (
+                  <div className="grid grid-cols-3 grid-rows-3  text-gray-400 w-full h-full text-xs gap-1 font-light">
+                    {Array.from({ length: 9 }).map((_, i) => (
+                      <div key={i} className="flex justify-center items-center">
+                        {marking[row][col][i] ? i + 1 : ""}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             );
           }),
