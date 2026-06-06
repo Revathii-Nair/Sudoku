@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ActionBtn({ action, Icon, color }) {
+export default function ActionBtn({ action, Icon, color, onClick }) {
   return (
     <>
       <button
@@ -20,6 +20,7 @@ export default function ActionBtn({ action, Icon, color }) {
           const span = e.currentTarget.querySelector("span");
           if (span) span.style.color = "var(--color-black)";
         }}
+        onClick={onClick}
       >
         {Icon && <Icon className="w-6 h-6 transition-transform duration-200 group-hover:rotate-10" style={{ color: `var(--${color})` }} />}
         <span className="mt-1 text-sm font-semibold transition-colors duration-200 group-hover:font-bold">{action}</span>

@@ -18,9 +18,21 @@ app.add_middleware(CORSMiddleware,
 class Puzzle(BaseModel):
     puzzle: list[list[int]]
 
-@app.get("/")
-def display():
-    return "PYTHON API is working on 8000"
+puzzle_try=[
+    [5, 3, 0, 0, 7, 0, 0, 0, 2],
+    [6, 7, 0, 1, 9, 5, 0, 0, 0],
+    [0, 9, 8, 0, 0, 0, 0, 6, 0],
+    [8, 0, 0, 0, 6, 0, 0, 0, 3],
+    [4, 0, 6, 8, 0, 3, 7, 0, 1],
+    [7, 1, 0, 0, 2, 0, 0, 0, 6],
+    [0, 6, 0, 0, 0, 7, 2, 8, 4],
+    [0, 0, 7, 4, 1, 9, 0, 0, 5],
+    [0, 4, 0, 0, 8, 0, 0, 7, 9],
+  ]
+
+@app.get("/getPuzzle")
+def random_puzzle():
+    return puzzle_try
 
 @app.post("/solve/")
 @limiter.limit("10/minute")

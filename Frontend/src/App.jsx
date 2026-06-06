@@ -5,7 +5,7 @@ import GamePage from "./pages/GamePage";
 function App() {
   return (
     <>
-      <div className="bg-linear-to-t from-[#e1d4fe] to-[#aaacfb]">
+      <div>
         <Header />
         <GamePage />
       </div>

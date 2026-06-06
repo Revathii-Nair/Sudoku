@@ -30,8 +30,8 @@
     --color-cell-select: #7ed6f0;
     --color-cell-highlight: #e2e8ea;
     --color-cell-same-highlight: #b7d5de;
-    --color-cell-error-highlight: #f4d4d4;
-    --color-cell-error: #f95757;
+    --color-cell-error-highlight: #f4bbbb;
+    --color-cell-error: #f54949;
   }
 
   .dark {
@@ -55,10 +55,9 @@
   }
 
   body {
-    background-color: var(--color-primary);
-    color: var(--color-headline);
-    transition:
-      background-color 0.4s ease,
-      color 0.4s ease;
+    @apply bg-gradient-to-t from-[#e1d4fe] to-[#aaacfb];
+    height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 }

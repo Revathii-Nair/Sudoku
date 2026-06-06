@@ -6,27 +6,23 @@ import ActionBtn from "./ActionBtn";
 import NumberPad from "./ControlPanel";
 import api from "../../api";
 
-const mainPuzzle = [
-  [5, 3, 0, 0, 7, 0, 0, 0, 2],
-  [6, 7, 0, 1, 9, 5, 0, 0, 0],
-  [0, 9, 8, 0, 0, 0, 0, 6, 0],
-  [8, 0, 0, 0, 6, 0, 0, 0, 3],
-  [4, 0, 6, 8, 0, 3, 7, 0, 1],
-  [7, 1, 0, 0, 2, 0, 0, 0, 6],
-  [0, 6, 0, 0, 0, 7, 2, 8, 4],
-  [0, 0, 7, 4, 1, 9, 0, 0, 5],
-  [0, 4, 0, 0, 8, 0, 0, 7, 9],
-];
-
-export default function GameGrid({ selectedCell, setSelectedCell, selectedNumber, setSelectedNumber }) {
-  const [puzzle, setPuzzle] = useState(mainPuzzle);
-  const [solvedPuzzle, setSolvedPuzzle] = useState(null);
-  const [userBoard, setUserBoard] = useState(mainPuzzle.map((row) => row.map(() => null)));
-
+export default function GameGrid({
+  selectedCell,
+  setSelectedCell,
+  selectedNumber,
+  setSelectedNumber,
+  userBoard,
+  setUserBoard,
+  puzzle,
+  solvedPuzzle,
+  history,
+  setHistory,
+}) {
   const handleSetUserBoard = (row, col, num) => {
     const updatedUserBoard = [...userBoard];
     updatedUserBoard[row][col] = num;
     setUserBoard(updatedUserBoard);
+    setHistory([...history, { row, col, value: num }]);
   };
 
   useEffect(() => {
@@ -35,19 +31,6 @@ export default function GameGrid({ selectedCell, setSelectedCell, selectedNumber
       setSelectedNumber(null);
     }
   }, [selectedNumber, selectedCell]);
-
-  useEffect(() => {
-    const fetchSolvedPuzzle = async () => {
-      try {
-        const solvedPuzzle = await api.post("/solve", { puzzle: mainPuzzle });
-        setSolvedPuzzle(solvedPuzzle.data);
-        console.log(solvedPuzzle.data);
-      } catch (err) {
-        console.error("Puzzle API error:", err.response?.data || err.message);
-      }
-    };
-    fetchSolvedPuzzle();
-  }, []);
 
   return (
     <div className="flex justify-center items-center">
@@ -88,7 +71,7 @@ export default function GameGrid({ selectedCell, setSelectedCell, selectedNumber
             const textColor = userBoard[row][col] !== null && puzzle[row][col] === 0 ? "text-cyan-500 " : "text-blue-600";
             const isCorrect =
               solvedPuzzle && userBoard[row][col] !== null && userBoard[row][col] !== solvedPuzzle[row][col]
-                ? "!text-[var(--color-cell-error))] !bg-[var(--color-cell-error-highlight)] "
+                ? "!text-[var(--color-cell-error))] !bg-[var(--color-cell-error-highlight)]"
                 : "";
             const isSameNumber =
               isCorrect === "" && selectedValue !== null && value === selectedValue ? "bg-[var(--color-cell-same-highlight)] !text-blue-900" : "";

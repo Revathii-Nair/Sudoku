@@ -3,17 +3,19 @@ import { useState } from "react";
 import ActionBtn from "./ActionBtn";
 import StatsBar from "./StatBar";
 import NumberBtn from "./NumberBtn";
-import { X, Undo2, Lightbulb, PencilLine, Eraser } from "lucide-react";
+import { X, Undo2, Lightbulb, PencilLine, Eraser, Redo2 } from "lucide-react";
 import NumberPanel from "./NumberPanel";
 
-export default function ControlPanel({ selectedNumber, setSelectedNumber }) {
+export default function ControlPanel({ selectedNumber, setSelectedNumber, handleErase, handleHint, handleUndo, handleRedo }) {
   return (
     <>
-      <div className="ml-10 flex flex-col gap-6 items-center">
+      <div className="ml-1 flex flex-col gap-6 items-center">
         <div className="flex gap-6">
-          <ActionBtn action="Erase" Icon={Eraser} color="color-red-500"></ActionBtn>
-          <ActionBtn action="Undo" Icon={Undo2} color="color-btn"></ActionBtn>
-          <ActionBtn action="Hint" Icon={Lightbulb} color="color-yellow"></ActionBtn>
+          <ActionBtn action="Erase" Icon={Eraser} color="color-red-500" onClick={handleErase}></ActionBtn>
+          <ActionBtn action="Undo" Icon={Undo2} color="color-btn" onClick={handleUndo}></ActionBtn>
+          <ActionBtn action="Redo" Icon={Redo2} color="color-btn" onClick={handleRedo}></ActionBtn>
+
+          <ActionBtn action="Hint" Icon={Lightbulb} color="color-yellow" onClick={handleHint}></ActionBtn>
           <ActionBtn action="Mark" Icon={PencilLine} color="color-secondary"></ActionBtn>
         </div>
 
