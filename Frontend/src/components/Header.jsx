@@ -7,7 +7,7 @@ import Switch from "./Switch";
 export default function Header() {
   return (
     <>
-      <div className="flex justify-between px-1 py-2 items-center  text-3xl bg-linear-65 from-[#8b5cf6] to-[#6366f1] text-white font-bold drop-shadow-2xl">
+      <div className="flex justify-between px-1 py-2 items-center  text-3xl bg-linear-65 from-[#8b5cf6]/20 to-[#6366f1]/20 text-white font-bold drop-shadow-2xl rounded-b-2xl backdrop-blur-[1px]">
         <div className="flex items-center">
           <svg className=" stroke-3 h-15 w-15 mr-2" viewBox="0 0 430 430">
             <path
@@ -19,12 +19,12 @@ export default function Header() {
           <span>SudoQuest</span>
         </div>{" "}
         <div className="mr-2 flex items-center">
-          <Switch />
+          {/* <Switch /> */}
 
           <button
             className="px-4 py-2  ml-2 text-white 
                bg-linear-65  
-               hover:from-pink-500 hover:to-purple-500 
+               hover:from-pink-500/30 hover:to-purple-500/30 
                transition-all duration-300  rounded-lg"
           >
             <Menu className="w-6 h-6" />

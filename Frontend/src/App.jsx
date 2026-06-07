@@ -6,8 +6,10 @@ function App() {
   return (
     <>
       <div>
-        <Header />
-        <GamePage />
+        <div class="absolute top-0 z-[-2] lg:h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]">
+          <Header />
+          <GamePage />
+        </div>
       </div>
     </>
   );

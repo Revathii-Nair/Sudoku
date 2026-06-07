@@ -5,10 +5,16 @@ from slowapi import Limiter
 from slowapi.util import get_remote_address
 from CSP import CSP
 import random
+import os
+import requests
+from dotenv import load_dotenv
 
-
+load_dotenv()
 app = FastAPI()
 limiter = Limiter(key_func= get_remote_address)
+api_key = os.getenv("SUDOKU_GENERATOR_API_KEY")
+
+
 
 app.add_middleware(CORSMiddleware,
                    allow_origins=["*"],
@@ -35,9 +41,25 @@ puzzle_try=[
 def static_puzzle():
     return puzzle_try
 
-@app.get("/getRandomPuzzle")
-def random_puzzle():
-    return get_random_puzzle()
+@app.get("/getRandomPuzzle/{mode}")
+def random_puzzle(mode:str):
+    modes = {
+        "EASY":"easy",
+        "MEDIUM":"medium",
+        "HARD":"hard"
+    }
+    if mode not in modes:
+        return "Invalid Mode"
+    
+    headers = {"Content-Type": "application/json", "x-api-key": api_key }
+    body = {"difficulty": modes[mode], "solution": False, "array": True }
+    response = requests.post("https://youdosudoku.com/api/",json=body, headers=headers)
+    
+    if response.status_code == 200:
+        data = response.json()
+        puzzle = [[int(cell) for cell in row] for row in data["puzzle"]]
+        return puzzle
+   
 
 
 
@@ -47,7 +69,7 @@ def solve_sudoku(request: Request,p: Puzzle):
     return call_csp(p)
 
 
-def get_random_puzzle():
+def get_random_puzzle(mode):
     p = Puzzle(puzzle=[[0]*9 for _ in range(9)])
     row = random.randrange(9)
     col = random.randrange(9)
@@ -55,7 +77,7 @@ def get_random_puzzle():
     p.puzzle[row][col] = num
     puzzle = call_csp(p)
 
-    for _ in range(64):
+    for _ in range(mode):
         row = random.randrange(9)
         col = random.randrange(9)
         if(puzzle[row][col]==0):
@@ -76,10 +98,10 @@ def call_csp(p:Puzzle):
             solved_grid = [[0]*9 for _ in range(9)]
             for (r,c) in csp.solution:
                 solved_grid[r][c] = csp.solution[(r,c)]
-            print("Solved Sudoku:")
+            print("Solved Sudoku:",solved_grid)
             return solved_grid
         else:
-            return "No solution found"
+            return False
     
     except ValueError as e:
         return str(e)

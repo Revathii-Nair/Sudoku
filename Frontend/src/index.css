@@ -27,11 +27,13 @@
     --color-secondary: #994ff3;
     --color-tertiary: #fbdd74;
     --color-yellow: #ffaf03;
+    --color-cell-text: #89f5ff;
     --color-cell-select: #7ed6f0;
-    --color-cell-highlight: #e2e8ea;
-    --color-cell-same-highlight: #b7d5de;
+    --color-cell-highlight: #f6b3f6;
+    --color-cell-same-highlight: #f6b3f6;
     --color-cell-error-highlight: #f4bbbb;
     --color-cell-error: #f54949;
+    --color-neutral: #bebcbc;
   }
 
   .dark {
@@ -55,10 +57,16 @@
   }
 
   body {
-    @apply bg-gradient-to-t from-[#e1d4fe] to-[#aaacfb];
+    @apply bg-gradient-to-t from-[#fdfcfd] to-[#9ba6f5];
     height: 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     margin-bottom: 1rem;
+  }
+
+  @layer utilities {
+    .bg-neutral {
+      background-color: rgba(163, 163, 163, 0.2); /* neutral-400 (#a3a3a3) at 20% opacity */
+    }
   }
 }

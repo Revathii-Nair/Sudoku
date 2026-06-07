@@ -3,6 +3,7 @@ import GameGrid from "../components/GameGrid";
 import ControlPanel from "../components/ControlPanel";
 import ProgressBar from "../components/ProgressBar";
 import GameModeCard from "../components/GameModeCard";
+import LoadingScreen from "../components/LoadingPage";
 import api from "../../api";
 
 export default function GamePage() {
@@ -17,7 +18,8 @@ export default function GamePage() {
   const [puzzleSum, setPuzzleSum] = useState(0);
   const [markMode, setMarkMode] = useState(false);
   const [marking, setMarking] = useState(null);
-  const [hints, setHints] = useState(80);
+  const [gameMode, setGameMode] = useState("EASY");
+  const [hints, setHints] = useState(10);
   const [errors, setErrors] = useState(0);
 
   const handleErase = () => {
@@ -107,7 +109,7 @@ export default function GamePage() {
   useEffect(() => {
     const handleApi = async () => {
       try {
-        const p = await api.get("/getRandomPuzzle");
+        const p = await api.get(`/getRandomPuzzle/${gameMode}`);
         setPuzzle(p.data);
         setUserBoard(p.data.map((row) => row.map(() => null)));
 
@@ -125,12 +127,18 @@ export default function GamePage() {
     };
 
     handleApi();
-  }, []);
+  }, [gameMode]);
 
   return (
     <>
-      {puzzle && userBoard && solvedPuzzle && (
-        <>
+      {puzzle && userBoard && solvedPuzzle ? (
+        <div>
+          <div className="flex flex-row gap-3 justify-center items-center mx-4 my-6">
+            <GameModeCard mode="EASY" setGameMode={setGameMode}></GameModeCard>
+            <GameModeCard mode="MEDIUM" setGameMode={setGameMode}></GameModeCard>
+            <GameModeCard mode="HARD" setGameMode={setGameMode}></GameModeCard>
+          </div>
+
           <div>
             <ProgressBar progress={progress} />
           </div>
@@ -167,7 +175,9 @@ export default function GamePage() {
               progress={progress}
             />
           </div>
-        </>
+        </div>
+      ) : (
+        <LoadingScreen />
       )}
     </>
   );
