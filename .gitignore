@@ -139,3 +139,4 @@ dist
 /Sudoku notes
 .DS_Store
 *.pyc
+.vercel
