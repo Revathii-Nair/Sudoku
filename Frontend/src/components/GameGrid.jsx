@@ -23,6 +23,8 @@ export default function GameGrid({
   markMode,
   errors,
   setErrors,
+  setTotalErrors,
+  modalOpen,
 }) {
   const handleSetUserBoard = (row, col, num) => {
     if (markMode) {
@@ -32,9 +34,15 @@ export default function GameGrid({
       setHistory([...history, { row, col, value: num, marking: true }]);
     } else {
       const updatedUserBoard = [...userBoard];
+      const value = updatedUserBoard[row][col];
+
       updatedUserBoard[row][col] = num;
       setUserBoard(updatedUserBoard);
       setHistory([...history, { row, col, value: num }]);
+
+      if (num !== null && solvedPuzzle && num !== solvedPuzzle[row][col] && num !== value) {
+        setTotalErrors((e) => e + 1);
+      }
     }
   };
 
@@ -73,13 +81,15 @@ export default function GameGrid({
             ].join(" ");
 
             const isSelected =
-              selectedCell.row === row && selectedCell.col === col
-                ? "!bg-[var(--color-cell-same-highlight)]/40 !text-white hover:bg-[var(--color-cell-select)]"
+              !modalOpen && selectedCell.row === row && selectedCell.col === col
+                ? "!bg-[var(--color-cell-same-highlight)]/40 text-white hover:bg-[var(--color-cell-select)]"
                 : "";
 
-            const isSameRowOrCol = !isSelected && (selectedCell.row === row || selectedCell.col === col) ? "bg-[var(--color-cell-highlight)]/10" : "";
+            const isSameRowOrCol =
+              !modalOpen && !isSelected && (selectedCell.row === row || selectedCell.col === col) ? "bg-[var(--color-cell-highlight)]/10" : "";
 
             const isSameBlock =
+              !modalOpen &&
               selectedCell.row !== null &&
               selectedCell.col !== null &&
               !isSameRowOrCol &&
@@ -100,7 +110,7 @@ export default function GameGrid({
             const textColor = userBoard[row][col] !== null && puzzle[row][col] === 0 ? "text-[var(--color-cell-text)]" : "text-cyan-500/95";
             const isCorrect =
               solvedPuzzle && userBoard[row][col] !== null && userBoard[row][col] !== solvedPuzzle[row][col]
-                ? "!text-[var(--color-cell-error))] !bg-[var(--color-cell-error-highlight)]"
+                ? "!text-[var(--color-cell-error))] !bg-[var(--color-cell-error-highlight)] "
                 : "";
             const isSameNumber =
               isCorrect === "" && selectedValue !== null && value === selectedValue ? "bg-[var(--color-cell-same-highlight)]/30 text-white" : "";
@@ -108,7 +118,7 @@ export default function GameGrid({
             return (
               <div
                 key={`${row}-${col}`}
-                className={`flex justify-center items-center w-[60px] h-[60px] text-2xl font-semibold ${borderClasses}  hover:bg-[var(--color-cell-same-highlight)]/20 hover:text-white ${textColor} ${isSelected} ${isSameNumber} ${isSameRowOrCol} ${isSameBlock} ${isCorrect}`}
+                className={`flex justify-center cursor-pointer items-center w-[60px] h-[60px] text-2xl font-semibold ${borderClasses}  hover:bg-[var(--color-cell-same-highlight)]/20 hover:text-white ${textColor} ${isSelected} ${isSameNumber} ${isSameRowOrCol} ${isSameBlock} ${isCorrect} transition duration-200`}
                 onClick={() => {
                   setSelectedCell({ row, col });
                 }}

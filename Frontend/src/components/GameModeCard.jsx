@@ -1,16 +1,19 @@
 import React from "react";
 
-export default function GameModeCard({ mode, setGameMode }) {
+export default function GameModeCard({ mode, setGameMode, selectedGameMode }) {
+  const isActive = selectedGameMode === mode;
+
   return (
-    <>
-      <div className=" ">
-        <button
-          className="flex flex-col justify-center items-center w-25 h-10 rounded-4xl shadow-lg border-[var(--color-pink-border)]/50  border-2 transition-colors duration-200 hover:shadow-lg hover:bg-[#f6b3f6] hover:border-0 hover:scale-110  text-[var(--color-pink-border)] bg-neutral-400/20 backdrop-blur-[1px]"
-          onClick={() => setGameMode(mode)}
-        >
-          <span className="mt-1 text-sm font-semibold transition-colors duration-200 group-hover:font-bold">{mode}</span>
-        </button>
-      </div>
-    </>
+    <div>
+      <button
+        onClick={() => setGameMode(mode)}
+        className={`flex flex-col justify-center items-center w-25 h-10 rounded-4xl shadow-lg border-2
+          transition-all duration-200   text-[var(--color-pink-border)] hover:bg-[#f6b3f6] cursor-pointer
+          ${isActive ? "!bg-[#6d0d6da6]  border-neutral-400/80  " : "bg-neutral-400/15  border-[var(--color-pink-border)]/70 backdrop-blur-[1px]"}  }
+        `}
+      >
+        <span className="mt-1 text-sm font-semibold">{mode}</span>
+      </button>
+    </div>
   );
 }

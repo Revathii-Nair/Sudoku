@@ -18,6 +18,7 @@ export default function ControlPanel({
   hints,
   errors,
   progress,
+  time,
 }) {
   return (
     <>
@@ -33,7 +34,7 @@ export default function ControlPanel({
 
         <NumberPanel selectedNumber={selectedNumber} setSelectedNumber={setSelectedNumber} />
 
-        <StatsBar hints={hints} errors={errors} progress={progress} />
+        <StatsBar hints={hints} errors={errors} progress={progress} time={time} />
       </div>
     </>
   );

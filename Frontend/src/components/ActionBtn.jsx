@@ -5,10 +5,7 @@ export default function ActionBtn({ action, Icon, color, onClick, markMode }) {
     <>
       <div className="group relative inline-block">
         <button
-          className="flex flex-col justify-center items-center w-20 h-20 rounded-full shadow-lg border-2 transition-colors duration-200 hover:shadow-lg hover:border-4 hover:scale-110 bg-neutral-400/20  text-neutral-300/80  backdrop-blur-[1px] border-[var(--color-pink-border)]"
-          style={{
-            "--hover-color": `var(--${color})`,
-          }}
+          className="flex flex-col justify-center cursor-pointer items-center w-20 h-20 rounded-full shadow-lg border-2 transition-colors duration-200 group-hover:shadow-lg group-hover:border-4 group-hover:scale-110 bg-neutral-400/20  text-neutral-300/80  backdrop-blur-[1px] border-[var(--color-pink-border)]"
           onMouseEnter={(e) => {
             e.currentTarget.style.borderColor = `var(--${color})`;
             const span = e.currentTarget.querySelector("span");
@@ -27,7 +24,7 @@ export default function ActionBtn({ action, Icon, color, onClick, markMode }) {
 
         {action === "Mark" && (
           <span
-            className={`absolute -top-1 -right-1 text-xs font-bold text-white rounded-full px-2 py-1 shadow-md transition-transform duration-200 group-hover:scale-110 ${
+            className={`absolute cursor-pointer -top-1 -right-1 text-xs font-bold text-white rounded-full px-2 py-1 shadow-md transition-transform duration-200 group-hover:scale-110 ${
               markMode ? "bg-purple-600" : "bg-gray-400"
             }`}
           >
