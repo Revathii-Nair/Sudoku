@@ -76,8 +76,8 @@ export default function GameGrid({
           rowArr.map((val, col) => {
             const borderClasses = [
               "border border-[var(--color-pink-border)]/70",
-              col % 3 === 0 && col !== 0 ? "border-l-2 " : "",
-              row % 3 === 0 && row !== 0 ? "border-t-2 " : "",
+              col % 3 === 0 && col !== 0 ? "border-l-5 " : "",
+              row % 3 === 0 && row !== 0 ? "border-t-5 " : "",
             ].join(" ");
 
             const isSelected =

@@ -1,6 +1,6 @@
 import React from "react";
 
-const StatsBar = ({ hints = 0, errors = 0, progress, time }) => {
+const StatsBar = ({ hints = 0, errors = 0, progress = 0, time }) => {
   return (
     <div className="flex items-center justify-between w-[420px] bg-neutral-400/20 rounded-full py-3 px-6 shadow-lg border border-[var(--color-pink-border)] backdrop-blur-[2px]">
       <div className="flex flex-col items-center flex-1">
