@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import GamePage from "./pages/GamePage";
-import SolverPage from "./pages/SolvePage";
 
 function App() {
   return (
