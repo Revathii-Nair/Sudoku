@@ -4,20 +4,6 @@
   :root {
     --color-bg: #fffffe;
     --color-surface: #f0e2e1;
-    --color-headline: #181818;
-    --color-subheadline: #2e2e2e;
-    --color-paragraph: #2e2e2e;
-
-    --color-btn-text: #181818;
-    --color-stroke: #181818;
-    --color-icon-main: #f2eef5;
-    --color-highlight: #4fc4cf;
-
-    --color-card-bg: #f0e2e1;
-    --color-card-heading: #181818;
-    --color-card-paragraph: #2e2e2e;
-    --shadow-glow: 0 0 20px rgba(79, 196, 207, 0.35);
-    --shadow-purple: 0 0 20px rgba(153, 79, 243, 0.35);
 
     --color-pink-border: #d946ef;
     --color-surface-2: #ffecec;
@@ -36,37 +22,16 @@
     --color-neutral: #bebcbc;
   }
 
-  .dark {
-    --color-bg: #12111a;
-    --color-surface: #1e1c2e;
-    --color-headline: #f2eef5;
-    --color-subheadline: #c8c2d4;
-    --color-paragraph: #c8c2d4;
-    --color-btn: #4fc4cf;
-    --color-btn-text: #12111a;
-    --color-stroke: #f2eef5;
-    --color-icon-main: #1e1c2e;
-    --color-highlight: #4fc4cf;
-    --color-secondary: #994ff3;
-    --color-tertiary: #fbdd74;
-    --color-card-bg: #1e1c2e;
-    --color-card-heading: #f2eef5;
-    --color-card-paragraph: #c8c2d4;
-    --shadow-glow: 0 0 30px rgba(79, 196, 207, 0.2);
-    --shadow-purple: 0 0 30px rgba(153, 79, 243, 0.25);
-  }
-
   body {
-    @apply bg-gradient-to-t from-[#fdfcfd] to-[#9ba6f5];
+    @apply bg-gradient-to-t from-[#360636] to-[#02072e];
     height: 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     margin-bottom: 1rem;
   }
+}
 
-  @layer utilities {
-    .bg-neutral {
-      background-color: rgba(163, 163, 163, 0.2); /* neutral-400 (#a3a3a3) at 20% opacity */
-    }
-  }
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
 }

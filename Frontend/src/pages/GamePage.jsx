@@ -142,6 +142,7 @@ export default function GamePage() {
         setMarking(p.data.map((row) => row.map(() => Array(9).fill(false))));
         console.log(p.data.map((row) => row.map(() => Array(9).fill(false))));
 
+        setHints(0);
         setSeconds(0);
         clearInterval(intervalRef.current);
         intervalRef.current = setInterval(() => {

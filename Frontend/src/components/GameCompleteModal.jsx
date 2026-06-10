@@ -36,15 +36,15 @@ export default function GameCompleteModal({ ModalOpen, setModalOpen, time = 4, e
 
         <div className="flex justify-center gap-4 m-4 my-10">
           <div className="flex flex-col items-center bg-[#1a1a2e] rounded-xl px-4 py-2">
-            <span className="text-yellow-200 text-lg font-bold">{time}</span>
+            <span className="text-blue-400 text-lg font-bold">{time}</span>
             <span className="text-xs text-gray-400">TIME</span>
           </div>
           <div className="flex flex-col items-center bg-[#1a1a2e] rounded-xl px-4 py-2">
-            <span className="text-yellow-200 text-lg font-bold">{errors}</span>
+            <span className="text-blue-400 text-lg font-bold">{errors}</span>
             <span className="text-xs text-gray-400">ERRORS</span>
           </div>
           <div className="flex flex-col items-center bg-[#1a1a2e] rounded-xl px-4 py-2">
-            <span className="text-yellow-200 text-lg font-bold">{hints}</span>
+            <span className="text-blue-400 text-lg font-bold">{hints}</span>
             <span className="text-xs text-gray-400">HINTS</span>
           </div>
         </div>
@@ -52,7 +52,7 @@ export default function GameCompleteModal({ ModalOpen, setModalOpen, time = 4, e
         <div className="flex justify-center gap-4  ">
           <button
             onClick={onNextMode}
-            className="px-6 py-3 border cursor-pointer bg-neutral-800/30 border-[#ba9bf8]/40  rounded-xl hover:bg-[#f6b3f6]/60 hover:scale-110  transition-transform transition-colors duration-300 ease-in-out"
+            className="px-6 py-3 border cursor-pointer bg-neutral-800/30 border-[#ba9bf8]/40  rounded-xl bg-linear-60 hover:from-[#6021f2]/60 hover:to-[#272bec]/60 hover:scale-110  transition-transform transition-colors duration-300 ease-in-out"
           >
             Play Next Mode
           </button>
@@ -60,7 +60,7 @@ export default function GameCompleteModal({ ModalOpen, setModalOpen, time = 4, e
             onClick={() => {
               setModalOpen(false);
             }}
-            className="px-6 py-3 border cursor-pointer bg-neutral-800/30 border-[#ba9bf8]/40  rounded-xl   hover:bg-[#f6b3f6]/60 hover:scale-110 transition-transform transition-colors duration-300 ease-in-out  "
+            className="px-6 py-3 border cursor-pointer bg-neutral-800/30 border-[#ba9bf8]/40  rounded-xl  bg-linear-60 hover:from-[#6021f2]/60 hover:to-[#272bec]/60 hover:scale-110 transition-transform transition-colors duration-300 ease-in-out  "
           >
             Go Back
           </button>
