@@ -98,7 +98,6 @@ def call_csp(p:Puzzle):
             solved_grid = [[0]*9 for _ in range(9)]
             for (r,c) in csp.solution:
                 solved_grid[r][c] = csp.solution[(r,c)]
-            print("Solved Sudoku:",solved_grid)
             return solved_grid
         else:
             return False
